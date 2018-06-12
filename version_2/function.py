@@ -3,6 +3,7 @@ from bluepy import btle
 import paho.mqtt.client as mqtt
 import sys
 import time
+import deserialize as ds
 
 client = mqtt.Client()
 
@@ -86,7 +87,12 @@ def read(charUUID,address):
     request = GATTRequester(address)
     time.sleep(3)
     text = request.read_by_uuid(charUUID)[0]
-    return(text)
+
+    data_tuple = ds.deserialize(text)
+    if data_tuple[0] == "VMM":
+        return ds.voltmeter2string(data_tuple)
+    else:
+        return text
 
 def on_connect(client,userdata,flags,rc):
     #define callback
