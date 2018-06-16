@@ -25,7 +25,7 @@ def main():
         # Scans for BLE Device For INTERVAL seconds
         device_cfg.settings["SCAN_INTERVAL"] = input("Enter BLE scaning time in secods: ")
         device_cfg.settings["BLE_NAME"] = input("Enter Device Name: ")
-        device_cfg.settings["BLE_ADDRESS"] = function.scan(device_cfg.settings["SCAN_INTERVAL"], device_cfg.settings["BLE_NAME"])
+        device_cfg.settings["BLE_ADDRESS"] = function.scan(int(device_cfg.settings["SCAN_INTERVAL"]), device_cfg.settings["BLE_NAME"])
 
     # Establish Connection with BLE Device either way
     GATTRequester(device_cfg.settings["BLE_ADDRESS"], False)
