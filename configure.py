@@ -17,7 +17,8 @@ class Config:
         cfg = []
 
         with open("ss_settings.cfg", "r") as fp:
-            cfg = fp.readlines()
+            cfg = [i.replace('\n', '') for i in fp.readlines()]
+
 
         for line in cfg:
             key, value = line.split("=")
@@ -26,9 +27,12 @@ class Config:
     def save_cfg(self):
 
         with open("ss_settings.cfg", "w") as fp:
-
+            out = []
             for elem in self.settings.keys():
-                fp.write(str(elem) + "=" + str(self.settings[elem]))
+                fp.write(str(elem) + "=" + str(self.settings[elem]) + "\n")
+
+    def __str__(self):
+        return str(self.settings)
 
 
 ##############################################################################
@@ -40,3 +44,12 @@ class Config:
 #       - UUID of desired characteristic
 #
 #############################################################################
+
+if __name__ == "__main__":
+    x = Config()
+    print(x)
+    x.settings["TEST1"] = "SOMEBODY"
+    x.settings["TEST2"] = "ONCE"
+    x.settings["TEST3"] = "TOLD"
+    x.settings["TEST4"] = "ME"
+    x.save_cfg()
