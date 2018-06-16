@@ -75,7 +75,7 @@ def choose_CharUUID(address, name):
         charList.append(str(ch.uuid))
         print ("%d. " % (charChoice) + str(ch.uuid))
     print ("")
-    charChoice = int(raw_input("Choose Characteristic: "))
+    charChoice = int(input("Choose Characteristic: "))
 
     # disconnects from the device
     device.disconnect()

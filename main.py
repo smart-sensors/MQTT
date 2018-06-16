@@ -25,7 +25,7 @@ def main():
         # Scans for BLE Device For INTERVAL seconds
         device_cfg.settings["SCAN_INTERVAL"] = input("Enter BLE scaning time in secods: ")
         device_cfg.settings["BLE_NAME"] = input("Enter Device Name: ")
-        device_cfg.settings["BLE_ADDRESS"] = function.scan(INTERVAL, BLE_NAME)
+        device_cfg.settings["BLE_ADDRESS"] = function.scan(device_cfg.settings["INTERVAL"], device_cfg.settings["BLE_NAME"])
 
     # Establish Connection with BLE Device either way
     GATTRequester(device_cfg.settings["BLE_ADDRESS"], False)
@@ -33,7 +33,7 @@ def main():
 
     # if settings aren't there, setup the rest manually
     if not device_cfg.has_settings:
-        device_cfg.settings["CHARACTERISTIC"] = function.choose_CharUUID(BLE_ADDRESS, BLE_NAME)
+        device_cfg.settings["CHARACTERISTIC"] = function.choose_CharUUID(device_cfg.settings["BLE_ADDRESS"], device_cfg.settings["BLE_NAME"])
         device_cfg.settings["TCP"] = input("Enter TCP Address for Broker: ")
         device_cfg.settings["PORT"] = input("Enter TCP Port for Broker: ")
         device_cfg.settings["TOPIC"] = input("Enter topic to publish: ")
