@@ -1,3 +1,4 @@
+#! /usr/bin/python3
 # Import Modules
 import paho.mqtt.client as mqtt
 import time
@@ -45,7 +46,7 @@ def main():
     # INTERVAL = int(raw_input("Publish every ____ seconds: "))
 
     # Establish Connection with Broker
-    client.connect(device_cfg.settings["TCP"], device_cfg.settings["PORT"])
+    client.connect(device_cfg.settings["TCP"], int(device_cfg.settings["PORT"]))
     client.on_connect = function.on_connect
     time.sleep(3)
     client.loop_start()
