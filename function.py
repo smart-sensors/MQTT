@@ -1,4 +1,4 @@
-from gattlib import*
+from gattlib import *
 from bluepy import btle
 # import paho.mqtt.client as mqtt
 # import sys
@@ -96,7 +96,7 @@ def read(charUUID, address):
     print(text)
     data_tuple = ds.deserialize(text)
     print(data_tuple)
-    if data_tuple[0] == "VMM":
+    if data_tuple[0] == "TST":
         return ds.voltmeter2string(data_tuple)
     else:
         return text

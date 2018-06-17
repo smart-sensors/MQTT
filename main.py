@@ -54,7 +54,7 @@ def main():
     try:
         while True:
             # Publish message every INTERVAL second
-            message = function.read(device_cfg.settings["CHAR_UUID"], device_cfg.settings["BLE_ADDRESS"])
+            message = function.read(device_cfg.settings["CHARACTERISTIC"], device_cfg.settings["BLE_ADDRESS"])
             client.publish(device_cfg.settings["TOPIC"], message)
             print("Published: {}".format(message))
             time.sleep(int(device_cfg.settings["PUB_INTERVAL"]))
