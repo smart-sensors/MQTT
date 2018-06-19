@@ -12,9 +12,14 @@ import bt_functions
 
 
 def main():
-    device = bt_functions.le_scan()
-    for i in device.getServices().items():
-        print("{} -- {}".format(i[0], i[1]))
+    device = bt_functions.le_scan(5)
+    characteristic = bt_functions.selectService(device)
+    a = characteristic.read()
+    b = ds.deserialize(a)
+    print(ds.voltmeter2string(b))
+    print("done")
+    device.disconnect()
+    
 
 
 
