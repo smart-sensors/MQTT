@@ -88,7 +88,7 @@ def read(charUUID, address):
 
     #Reads the value of a given charactertistic uuid
 
-    request = GATTRequester(address)
+    request = GATTRequester(address, False)
     time.sleep(3)
     text = request.read_by_uuid(charUUID)[0]
 
