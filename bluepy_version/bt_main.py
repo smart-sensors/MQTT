@@ -13,9 +13,9 @@ import bt_functions
 # import mqtt_interface
 
 
-def main():
-    TCP = "128.10.3.51"
-    PORT = 1883
+def main(TCP, PORT):
+    #TCP = "128.10.3.51"
+    #PORT = 1883
     
     
     device = bt_functions.le_scan(5)
