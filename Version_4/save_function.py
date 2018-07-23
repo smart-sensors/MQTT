@@ -1,5 +1,5 @@
 #Import Libraries
-from ConfigParser import*
+from configparser import*
 
 #Initializes dictionary with options and assosiated values
 value_list = {}
