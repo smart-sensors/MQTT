@@ -49,25 +49,25 @@ try:
         print(monitor.values())
 
         #Connect to BLE device
-        if ("ble_connect" in monitor.values() and monitor["Raspberrypi1/setup/DeviceName"] != ""):
+        if ("ble_connect" in monitor.values() and monitor["Raspberrypi2/setup/DeviceName"] != ""):
             print("Made it :)")
             #scans for BLE devices for 3 seconds and attemps to connect with given device name
-            ble_address = ble_function.le_scan(3,monitor["Raspberrypi1/setup/DeviceName"])
+            ble_address = ble_function.le_scan(3,monitor["Raspberrypi2/setup/DeviceName"])
 
             #Initilize topic to publish BLE connectivity status
-            BLE_Status_topic = "Raspberrypi1/"+monitor["Raspberrypi1/setup/DeviceName"]+"/BLE_Status"
+            BLE_Status_topic = "Raspberrypi2/"+monitor["Raspberrypi2/setup/DeviceName"]+"/BLE_Status"
 
             #Publishes statues of BLE connectivity status
             if ble_address:
                 print("Successfully connected")
                 client.publish(BLE_Status_topic,"Successfully Connected")
                 #Saves BLE Device Name to configuration file
-                save_function.write_config("BLE Device Name",monitor["Raspberrypi1/setup/DeviceName"])
-                devlist.append(monitor["Raspberrypi1/setup/DeviceName"])
+                save_function.write_config("BLE Device Name",monitor["Raspberrypi2/setup/DeviceName"])
+                devlist.append(monitor["Raspberrypi2/setup/DeviceName"])
             else:
                 client.publish(BLE_Status_topic,"Connection Error")
 
-            monitor["Raspberrypi1/setup/DeviceName"] = ""
+            monitor["Raspberrypi2/setup/DeviceName"] = ""
 
         #Sends saved device names
         elif ("saved_device" in monitor.values()):
@@ -81,14 +81,14 @@ try:
                 names = BLE_Device_Name["%i"%x] + " " + names
 
             #Publishes saved device names
-                client.publish("Raspberrypi1/Name_list",names)
+                client.publish("Raspberrypi2/Name_list",names)
 
         #Reads BLE Device Reading
         elif ("subscribe" in monitor.values()):
-            if (monitor["Raspberrypi1/subscribe_topic"] == "Temperature"):
+            if (monitor["Raspberrypi2/subscribe_topic"] == "Temperature"):
                 unit = " F"
             else:
-                unit = None;
+                unit = "";
         # TODO: 1. Determine address of valid characteristic of BLE device
         #       2. Make function that accepts a MAC and uses Peripheral to grab the data from the device
         #       3. Client.publish(topic, data)
@@ -99,11 +99,11 @@ try:
                 device = deviceName["%i"%(x)];
                 addr = ble_function.le_scan(1, device);
                 if addr == None:
-                    client.publish("Raspberrypi1/" + device, "Connection Error")
+                    client.publish("Raspberrypi2/" + device, "Connection Error")
                 else:
                     print("got address")
                     data = ble_function.le_read(addr)
-                    client.publish("Raspberrypi1/" + device, data + unit)
+                    client.publish("Raspberrypi2/" + device, str(data) + unit)
 
 except KeyboardInterrupt:
     pass

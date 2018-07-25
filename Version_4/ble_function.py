@@ -16,23 +16,34 @@ def le_scan(time,name):
                 return d.addr
 
 def le_read(addr):
-    device = Peripheral(addr)
-    sensor = [x for x in device.getCharacteristics() if x.uuid.getCommonName() == "ff01"][0]
-    data = sensor.read()
-    device.disconnect()
-    fixed = deserialize(data)
-    return data
+    try:
+        device = Peripheral(addr)
+    except BTLEException:
+        fixed = "CONNECTION FAILURE"
+    else:
+        sensor = [x for x in device.getCharacteristics() if x.uuid.getCommonName() == "ff01"][0]
+        data = sensor.read()
+        device.disconnect()
+        fixed = deserialize(data)
+    
+    print("{}".format(fixed))
+        
+    return fixed
 
 def deserialize(bitstream):
-
+    print(bitstream)
     # rebuild data by reversing 'endianness'
-    val = 0
-    cnt = 0
+    valhigh = 0
+    vallow = 0
+    low = bitstream[0:4]
+    high = bitstream[4:]
     
-    for x in bitstream:
-        val |= x << (cnt * 8)
-        cnt += 1
-
+    for x in range(0, 4):
+        valhigh += high[x]
+        vallow += low[x]
+    
+    val = str(valhigh) + "," + str(vallow)
+    
     return val
 
 

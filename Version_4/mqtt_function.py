@@ -4,7 +4,7 @@ def on_connect(client,userdata,flags,rc):
         print("Connection to Broker Successful")
 
     #Subscribe to Topics
-    client.subscribe("Raspberrypi1")
-    client.subscribe("Raspberrypi1/setup")
-    client.subscribe("Raspberrypi1/setup/DeviceName")
-    client.subscribe("Raspberrypi1/subscribe_topic")
+    client.subscribe("Raspberrypi2")
+    client.subscribe("Raspberrypi2/setup")
+    client.subscribe("Raspberrypi2/setup/DeviceName")
+    client.subscribe("Raspberrypi2/subscribe_topic")
