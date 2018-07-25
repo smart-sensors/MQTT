@@ -62,11 +62,11 @@ try:
                 print("Successfully connected")
                 client.publish(BLE_Status_topic,"Successfully Connected")
                 #Saves BLE Device Name to configuration file
-                #save_function.write_config("BLE Device Name",monitor["Raspberrypi1/setup/DeviceName"])
+                save_function.write_config("BLE Device Name",monitor["Raspberrypi1/setup/DeviceName"])
                 devlist.append(monitor["Raspberrypi1/setup/DeviceName"])
             else:
                 client.publish(BLE_Status_topic,"Connection Error")
-            
+
             monitor["Raspberrypi1/setup/DeviceName"] = ""
 
         #Sends saved device names
@@ -81,21 +81,29 @@ try:
                 names = BLE_Device_Name["%i"%x] + " " + names
 
             #Publishes saved device names
-                client.publish("names",names)
+                client.publish("Raspberrypi1/Name_list",names)
+
         #Reads BLE Device Reading
-        #elif ("subscribe" in monitor.values()):
-        #    if (monitor.values()["Raspberrypi1/subscribe_topic"] == "Temperature"):
-        #        print("yes")
-        
+        elif ("subscribe" in monitor.values()):
+            if (monitor["Raspberrypi1/subscribe_topic"] == "Temperature"):
+                unit = " F"
+            else:
+                unit = None;
         # TODO: 1. Determine address of valid characteristic of BLE device
         #       2. Make function that accepts a MAC and uses Peripheral to grab the data from the device
         #       3. Client.publish(topic, data)
         #       4. Timing of data updates
-        
-        for device in devlist: #save_function.read_config("BLE Device Name"):
-            addr = ble_function.le_scan(1, device)
-            data = ble_function.le_read(addr)
-            client.publish("Raspberrypi1/" + device, data)
+            deviceName = save_function.read_config("BLE Device Name");
+
+            for x in range(0,len(deviceName)):
+                device = deviceName["%i"%(x)];
+                addr = ble_function.le_scan(1, device);
+                if addr == None:
+                    client.publish("Raspberrypi1/" + device, "Connection Error")
+                else:
+                    print("got address")
+                    data = ble_function.le_read(addr)
+                    client.publish("Raspberrypi1/" + device, data + unit)
 
 except KeyboardInterrupt:
     pass

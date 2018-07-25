@@ -21,7 +21,7 @@ def le_read(addr):
     data = sensor.read()
     device.disconnect()
     fixed = deserialize(data)
-    return fixed
+    return data
 
 def deserialize(bitstream):
 
@@ -29,11 +29,10 @@ def deserialize(bitstream):
     val = 0
     cnt = 0
     
-    for x in data_bytes:
+    for x in bitstream:
         val |= x << (cnt * 8)
         cnt += 1
 
-    # convert to tuple
     return val
 
 

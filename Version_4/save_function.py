@@ -55,7 +55,7 @@ def write_config(SectionName,Value):
 
     #If user defined section is not found, it creates a new section in the configuration file
     else:
-        config_file = open ('config.ini','ab')
+        config_file = open ('config.ini','a')
         config_update = ConfigParser()
         config_update.add_section(SectionName)
         #Writes user defined value into new section 
