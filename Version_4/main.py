@@ -10,7 +10,7 @@ import ble_function
 import save_function
 
 #Assign Variables
-TCP_ADDRESS = "128.10.3.51"
+TCP_ADDRESS = "XXX.XXX.XXX"
 PORT = 1883
 client = mqtt.Client()
 monitor = {}
