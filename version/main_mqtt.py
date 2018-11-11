@@ -5,7 +5,7 @@ from time import sleep
 
 #Assign Variables
 client = mqtt.Client()
-TCP_ADDRESS = "128.10.3.51"
+TCP_ADDRESS = "XXX.XXX.XXX.XXX"
 PORT = "1883"
 TOPIC = "test"
 MESSAGE = "this is a test"
